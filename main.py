@@ -1,12 +1,17 @@
 import pandas as pd
 
 from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
 
 web = 'https://www.audible.com/search'
 
+options = Options()
+options.add_argument('--headless')
+options.add_argument('--window-size=1920x1080')
+
 driver = webdriver.Chrome()
+
 driver.get(web)
-driver.maximize_window()
 
 book_title = []
 book_author = []
