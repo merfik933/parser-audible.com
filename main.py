@@ -3,6 +3,9 @@ import time
 
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 
 web = 'https://www.audible.com/charts/best'
 
@@ -23,9 +26,10 @@ book_length = []
 
 current_page = 1
 while current_page <= last_page:
-    time.sleep(2)  
+    products = WebDriverWait(driver, 10).until(
+        EC.presence_of_all_elements_located((By.CLASS_NAME, 'productListItem'))
+    )
 
-    products = driver.find_elements('class name', 'productListItem')
     for product in products:
         book_title.append(product.find_element('xpath', './/h3[contains(@class, "bc-heading")]').text)
         book_author.append(product.find_element('xpath', './/li[contains(@class, "authorLabel")]').text)
